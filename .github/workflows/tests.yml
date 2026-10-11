@@ -17,8 +17,9 @@ jobs:
   test-bot:
     strategy:
       matrix:
-        # The oldest macOS Homebrew supports, so the bottle pours on 14, 15 and 26; plus Intel.
-        os: [ macos-14, macos-15-intel ]
+        # Homebrew's own Python only has bottles for macOS 26 on Apple silicon, so that's the
+        # one bottle worth building. Other Macs build from source.
+        os: [ macos-26 ]
     runs-on: ${{ matrix.os }}
     permissions:
       actions: read
