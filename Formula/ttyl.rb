@@ -7,15 +7,17 @@ class Ttyl < Formula
   sha256 "57bf617247daa5bf1b1461b14ba1956f70b0659ff4bb2d4e0f4e7a1fbc2143f6"
   license "MIT"
 
+  depends_on "rust" => :build
   depends_on "python@3.14"
 
   def install
     python = formula_opt_bin("python@3.14")/"python3.14"
     virtualenv_create(libexec, python)
-    # Dependencies come from PyPI as prebuilt wheels: anthropic's pydantic-core and jiter
-    # would otherwise need a Rust toolchain on every install.
-    system python, "-m", "pip", "--python=#{libexec}/bin/python", "install",
-           "--no-cache-dir", "--disable-pip-version-check", buildpath
+    # Dependencies come from PyPI. The two compiled ones (pydantic-core and jiter, via anthropic)
+    # are built here instead of taken as wheels: Homebrew rewrites the install name of every
+    # library it installs, and the wheels' libraries have no room for a longer one.
+    system python, "-m", "pip", "--python=#{libexec}/bin/python", "install", "--no-cache-dir",
+           "--disable-pip-version-check", "--no-binary=jiter,pydantic-core", buildpath
     bin.install_symlink libexec/"bin/ttyl"
   end
 
