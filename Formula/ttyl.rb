@@ -7,6 +7,11 @@ class Ttyl < Formula
   sha256 "57bf617247daa5bf1b1461b14ba1956f70b0659ff4bb2d4e0f4e7a1fbc2143f6"
   license "MIT"
 
+  bottle do
+    root_url "https://github.com/SrinjoyDutta1/homebrew-tap/releases/download/ttyl-0.4.0"
+    sha256 cellar: :any, arm64_tahoe: "71dd9620e525e1b064984dd2ee79205cdbadca29cc17efc420340bc0f4f598b5"
+  end
+
   depends_on "rust" => :build
   depends_on "python@3.14"
 
